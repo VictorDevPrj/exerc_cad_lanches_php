@@ -20,9 +20,10 @@
         <form action="" method="POST"> 
             
             <?php
-                $lanche = Cardapio::search("guer");
-                echo json_encode($lanche);
+                
             ?>
+
+            
         </form>
 
     </body>

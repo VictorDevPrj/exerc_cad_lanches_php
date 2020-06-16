@@ -9,9 +9,9 @@ class Sql extends PDO {
     }
 
 
-    private function setParams($statment, $parameters = array()){
+    private function setParams($statement, $parameters = array()){
         foreach ($parameters as $key => $value) {
-            $this->setParam($statment, $key, $value);
+            $this->setParam($statement, $key, $value);
         }
     }
 
@@ -19,10 +19,10 @@ class Sql extends PDO {
     //$value é valor  Exp ($id)
     //$statment recebe conn->prepare($rawQuery)
     //bindParam faz conexao com banco
-    private function setParam($statment, $key, $value){
-        $statment->bindParam($key, $value); 
+    private function setParam($statement, $key, $value){
+        $statement->bindParam($key, $value); 
     }
-
+    
     //rawQuery = query bruta ou comando em sql Exp: SELECT * FROM cliente;
     //params = PARAMETROS QUE SERAO PASSADOS
     //stmt 
@@ -39,7 +39,7 @@ class Sql extends PDO {
 
     }
 
-    public function select($rawQuery, $params = array()):array {
+    public function select($rawQuery, $params = array()){
         $stmt = $this->query($rawQuery, $params);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

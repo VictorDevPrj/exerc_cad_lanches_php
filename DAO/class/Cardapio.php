@@ -48,13 +48,8 @@ class Cardapio {
         ));
 
         if (count($results) > 0){
-            $row = $results[0];
-            $this->setId($row['id']);
-            $this->setCodigo($row['codigo']);
-            $this->setDesc_produto($row['desc_produto']);
-            $this->setPreco($row['preco']);
+            $this->setData($results[0]);
         }
-
     }
 
     public static function getList(){
@@ -71,6 +66,42 @@ class Cardapio {
         ));
     }
 
+    public function setData($data) {
+        $this->setId($data['id']);
+        $this->setCodigo($data['codigo']);
+        $this->setDesc_produto($data['desc_produto']);
+        $this->setPreco($data['preco']);
+    }
+
+    public function insert(){
+        $sql = new Sql();
+        $results = $sql->select("CALL sp_cardapio_insert(:CODIGO, :DESC_PRODUTO, :PRECO)", array(
+            ':CODIGO'=>$this->getCodigo(),
+            ':DESC_PRODUTO'=>$this->getDesc_produto(),
+            ':PRECO'=>$this->getPreco()
+        ));
+
+        if (count($results) > 0 ){
+            $this->setData($results[0]);
+        }
+
+    }
+
+    public function exibir(){
+        return array(
+            "id"=>$this->getId(),
+            "codigo"=>$this->getCodigo(),
+            "desc_produto"=>$this->getDesc_produto(),
+            "preco"=>$this->getPreco()
+        );
+    }
+
+    public function __construct($codigo = 0, $desc_produto = "", $preco = 0) {
+        $this->setCodigo($codigo);
+        $this->setDesc_produto($desc_produto);
+        $this->setPreco($preco);
+    }
+    
     public function __toString(){
         return json_encode(array(
             "id"=>$this->getId(),
@@ -79,7 +110,7 @@ class Cardapio {
             "preco"=>$this->getPreco()
         ));
     }
-
+    
 }
 
 ?>
